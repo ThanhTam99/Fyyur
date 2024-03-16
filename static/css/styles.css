@@ -1,0 +1,20 @@
+/* Đảm bảo navbar không chiếm toàn bộ chiều rộng của màn hình */
+.navbar {
+    width: 100%;
+}
+
+/* Đảm bảo logo / brand không bị tràn ra ngoài */
+.navbar-brand {
+    margin-right: 1rem; /* Tăng khoảng cách bên phải của logo */
+}
+
+/* Tùy chỉnh màu chữ và khoảng cách giữa các mục menu */
+.navbar-nav .nav-link {
+    color: #333; /* Màu chữ */
+    margin-right: 1rem; /* Khoảng cách giữa các mục menu */
+}
+
+/* Tùy chỉnh màu nền của navbar khi được hover */
+.navbar-light .navbar-nav .nav-link:hover {
+    background-color: #f0f0f0; /* Màu nền khi hover */
+}
