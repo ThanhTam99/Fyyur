@@ -1,12 +1,11 @@
-<!-- templates/pages/delete_user.html -->
 {% extends 'layouts/base.html' %}
 
 {% block title %}Delete User{% endblock %}
 
 {% block content %}
-    <h1>Delete User</h1>
-    <p>Are you sure you want to delete user "{{ user.username }}"?</p>
-    <form action="{{ url_for('delete_user', id=user.id) }}" method="post">
+    <h1>Delete Artist</h1>
+    <p>Are you sure you want to delete artist "{{ artist.username }}"?</p>
+    <form action="{{ url_for('delete_artist', id=artist.id) }}" method="post">
         <button type="submit" class="btn btn-danger">Delete</button>
     </form>
     <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>

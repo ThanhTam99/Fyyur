@@ -1,4 +1,3 @@
-<!-- templates/pages/index.html -->
 {% extends 'layouts/base.html' %}
 
 {% block title %}Fyyur{% endblock %}
@@ -15,14 +14,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for user in users %}
+            {% for artist in artists %}
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
+                <td>{{ artist.id }}</td>
+                <td>{{ artist.username }}</td>
+                <td>{{ artist.email }}</td>
                 <td>
-                    <a href="{{ url_for('update_user', id=user.id) }}" class="btn btn-primary">Edit</a>
-                    <a href="{{ url_for('delete_user', id=user.id) }}" class="btn btn-danger">Delete</a>
+                    <a href="{{ url_for('update_artist', id=artist.id) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ url_for('delete_artist', id=artist.id) }}" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
             {% endfor %}

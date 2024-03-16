@@ -1,11 +1,10 @@
-<!-- templates/pages/add_user.html -->
 {% extends 'layouts/base.html' %}
 
 {% block title %}Add User{% endblock %}
 
 {% block content %}
     <h1>Add User</h1>
-    <form action="{{ url_for('add_user') }}" method="post">
+    <form action="{{ url_for('add_artist') }}" method="post">
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="username" name="username" required>

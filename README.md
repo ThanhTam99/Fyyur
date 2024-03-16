@@ -23,6 +23,3 @@ project-root
     ├── forms/
     ├── layouts/
     └── pages/
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
