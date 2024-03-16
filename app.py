@@ -1,16 +1,19 @@
+# app.py
 from flask import Flask
-from config import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS
 from models import db
+from config import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS
+from routes import init_app  # Import hàm init_app từ file routes
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = SQLALCHEMY_TRACK_MODIFICATIONS
+
+# Khởi tạo SQLAlchemy cho ứng dụng Flask
 db.init_app(app)
-    
-# Import các routes từ routes.py
-from routes import *  # Thay vì import users, import tất cả các routes
+
+# Đăng ký các route từ file routes
+init_app(app)
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
+
