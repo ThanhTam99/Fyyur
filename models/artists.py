@@ -8,4 +8,3 @@ class Artists(db.Model):
     genre = db.Column(db.String(50))
     website = db.Column(db.String(120))
     bio = db.Column(db.Text)
-    # Thêm các trường dữ liệu mới cho Artists

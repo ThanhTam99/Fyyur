@@ -70,8 +70,8 @@ def init_app(app):
     def add_show():
         artist_id = request.form["artist_id"]
         venue_id = request.form["venue_id"]
-        start_time = datetime.strptime(request.form.get("start_time"), '%d-%m-%Y')
-        end_time = datetime.strptime(request.form.get("end_time"), '%d-%m-%Y')
+        start_time = datetime.strptime(request.form.get("start_time"), '%Y-%m-%d')
+        end_time = datetime.strptime(request.form.get("end_time"), '%Y-%m-%d')
         ticket_price = request.form["ticket_price"]
 
         new_show = Shows(

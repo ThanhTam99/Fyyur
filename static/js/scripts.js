@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const form = document.getElementById("show-form");
         form.action = "{{ url_for('add_show') }}";
-        document.getElementById("form-title").textContent = 'Add Show';
-        document.getElementById("submit-button").textContent = 'Create';
+        document.getElementById("form-title").textContent = 'Create Show';
+        document.getElementById("submit-button").textContent = 'Add Show';
     });
 });
