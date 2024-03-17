@@ -22,3 +22,17 @@
 .highlight {
     background-color: blue; /* Màu nền cho hàng được chọn */
 }
+.navbar-custom .nav-link, .navbar-custom .navbar-brand {
+    line-height: 1.5; /* Hoặc một giá trị phù hợp với thiết kế của bạn */
+}
+.navbar-custom .nav-link, .navbar-custom .navbar-brand {
+    vertical-align: middle;
+}
+
+.navbar-custom .nav-link, .navbar-custom .navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    /* Điều chỉnh thêm nếu cần */
+}
