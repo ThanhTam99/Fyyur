@@ -72,6 +72,13 @@
                         </td>
                     </tr>
                     {% endfor %}
+                    <tr>
+                        <td colspan="7">
+                            <form action="{{ url_for('add_show') }}" method="POST">
+                                <button type="submit" class="btn btn-success">Add Show</button>
+                            </form>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <!-- Pagination -->
@@ -82,15 +89,30 @@
                     <li class="page-item"><a class="page-link" href="?page={{ page - 1 }}">Previous</a></li>
                     {% endif %}
                     {% for p in range(1, total_pages + 1) %}
-                    <li class="page-item{% if p == page %} active{% endif %}"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                    <li class="page-item{% if p == page %} active{% endif %}"><a class="page-link"
+                            href="?page={{ p }}">{{ p }}</a></li>
                     {% endfor %}
-                    {% if page < total_pages %}
-                    <li class="page-item"><a class="page-link" href="?page={{ page + 1 }}">Next</a></li>
-                    {% endif %}
+                    {% if page < total_pages %} <li class="page-item"><a class="page-link"
+                            href="?page={{ page + 1 }}">Next</a></li>
+                        {% endif %}
                 </ul>
             </nav>
             {% endif %}
         </div>
     </div>
 </div>
+
+<!-- Script để xử lý sự kiện khi nhấn nút "Add" -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("add-show-button").addEventListener("click", function () {
+            document.getElementById("artist_id").value = "";
+            document.getElementById("venue_id").value = "";
+            document.getElementById("start_time").value = "";
+            document.getElementById("end_time").value = "";
+            document.getElementById("ticket_price").value = "";
+        });
+    });
+</script>
+
 {% endblock %}
