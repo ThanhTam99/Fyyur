@@ -1,0 +1,56 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Add Entry{% endblock %}
+
+{% block content %}
+    <h1>Add Entry</h1>
+    {% if entry_type == 'artist' %}
+    <form action="{{ url_for('add_entry', entry_type='artist') }}" method="post">
+        <!-- Thêm các trường dữ liệu cho artist -->
+        <div class="form-group">
+            <label for="artist_name">Name:</label>
+            <input type="text" class="form-control" id="artist_name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="artist_genre">Genre:</label>
+            <input type="text" class="form-control" id="artist_genre" name="genre" required>
+        </div>
+        <div class="form-group">
+            <label for="artist_website">Website:</label>
+            <input type="text" class="form-control" id="artist_website" name="website" required>
+        </div>
+        <div class="form-group">
+            <label for="artist_bio">Bio:</label>
+            <input type="text" class="form-control" id="artist_bio" name="bio" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Artist</button>
+    </form>
+    {% endif %}
+    
+    {% if entry_type == 'venue' %}
+    <form action="{{ url_for('add_entry', entry_type='venue') }}" method="post">
+        <!-- Thêm các trường dữ liệu cho venue -->
+        <div class="form-group">
+            <label for="venue_name">Name:</label>
+            <input type="text" class="form-control" id="venue_name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="venue_city">City:</label>
+            <input type="text" class="form-control" id="venue_city" name="city" required>
+        </div>
+        <div class="form-group">
+            <label for="venue_address">Address:</label>
+            <input type="text" class="form-control" id="venue_address" name="address" required>
+        </div>
+        <div class="form-group">
+            <label for="venue_capacity">Capacity:</label>
+            <input type="text" class="form-control" id="venue_capacity" name="capacity" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Venue</button>
+    </form>
+    {% endif %}
+    
+    {% if entry_type %}
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
+    {% endif %}
+{% endblock %}

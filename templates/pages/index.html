@@ -3,28 +3,83 @@
 {% block title %}Fyyur{% endblock %}
 
 {% block content %}
-    <h1>Artist Booking Site</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for artist in artists %}
-            <tr>
-                <td>{{ artist.id }}</td>
-                <td>{{ artist.username }}</td>
-                <td>{{ artist.email }}</td>
-                <td>
-                    <a href="{{ url_for('update_artist', id=artist.id) }}" class="btn btn-primary">Edit</a>
-                    <a href="{{ url_for('delete_artist', id=artist.id) }}" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container">
+    <h1>Shows Booking Site</h1>
+    <a href="{{ url_for('add_entry', entry_type='artist') }}" class="btn btn-primary">Add New Artist</a>
+    <a href="{{ url_for('add_entry', entry_type='venue') }}" class="btn btn-primary">Add New Venue</a>
+    <div class="row">
+        <div class="col">
+            <h2>Add New Show</h2>
+            <form action="{{ url_for('add_show') }}" method="POST">
+                <div class="form-group">
+                    <label for="artist_id">Artist</label>
+                    <select name="artist_id" id="artist_id" class="form-control">
+                        {% for artist in artists %}
+                        <option value="{{ artist.id }}">{{ artist.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="venue_id">Venue</label>
+                    <select name="venue_id" id="venue_id" class="form-control">
+                        {% for venue in venues %}
+                        <option value="{{ venue.id }}">{{ venue.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="start_time">Start Time</label>
+                    <input type="datetime-local" name="start_time" id="start_time" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="end_time">End Time</label>
+                    <input type="datetime-local" name="end_time" id="end_time" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="ticket_price">Ticket Price</label>
+                    <input type="text" name="ticket_price" id="ticket_price" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Show</button>
+            </form>
+        </div>
+        <div class="col">
+            <h2>Current Shows</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Artist</th>
+                        <th>Venue</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Ticket Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if shows %}
+                    {% for show in shows %}
+                    <tr>
+                        <td>{{ show.id }}</td>
+                        <td>{{ show.artist_name }}</td>
+                        <td>{{ show.venue_name }}</td>
+                        <td>{{ show.start_time }}</td>
+                        <td>{{ show.end_time }}</td>
+                        <td>{{ show.ticket_price }}</td>
+                        <td>
+                            <form action="{{ url_for('delete_entry', entry_type='show', id=show.id) }}" method="POST">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="6">No shows found.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}
