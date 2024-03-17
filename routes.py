@@ -5,13 +5,15 @@ from models import db
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
 from math import ceil
+from sqlalchemy import desc
+
 
 def init_app(app):
     @app.route("/")
     def index():
         artists = Artists.query.all()
         venues = Venues.query.all()
-        shows = Shows.query.all()
+        shows = Shows.query.order_by(desc(Shows.id)).all()
 
         for show_entry in shows:
             artist = Artists.query.get(show_entry.artist_id)
@@ -24,6 +26,9 @@ def init_app(app):
         total_pages = ceil(total_shows / items_per_page)
         page = request.args.get("page", 1, type=int)
         shows_on_page = shows[(page - 1) * items_per_page : page * items_per_page]
+
+        for index, show in enumerate(shows, start=1):
+            show.number = index
 
         return render_template(
             "pages/index.html",
@@ -65,8 +70,8 @@ def init_app(app):
     def add_show():
         artist_id = request.form["artist_id"]
         venue_id = request.form["venue_id"]
-        start_time = datetime.strptime(request.form["start_time"], "%Y-%m-%dT%H:%M")
-        end_time = datetime.strptime(request.form["end_time"], "%Y-%m-%dT%H:%M")
+        start_time = datetime.strptime(request.form.get("start_time"), '%d-%m-%Y')
+        end_time = datetime.strptime(request.form.get("end_time"), '%d-%m-%Y')
         ticket_price = request.form["ticket_price"]
 
         new_show = Shows(
@@ -77,6 +82,24 @@ def init_app(app):
             ticket_price=ticket_price,
         )
         db.session.add(new_show)
+        db.session.commit()
+        return redirect(url_for("index"))
+
+    @app.route("/edit_show/<int:show_id>", methods=["POST"])
+    def edit_show(show_id):
+        show = Shows.query.get_or_404(show_id)
+        artist_id = request.form["artist_id"]
+        venue_id = request.form["venue_id"]
+        start_time = datetime.strptime(request.form["start_time"], "%Y-%m-%dT%H:%M")
+        end_time = datetime.strptime(request.form["end_time"], "%Y-%m-%dT%H:%M")
+        ticket_price = request.form["ticket_price"]
+
+        show.artist_id = artist_id
+        show.venue_id = venue_id
+        show.start_time = start_time
+        show.end_time = end_time
+        show.ticket_price = ticket_price
+
         db.session.commit()
         return redirect(url_for("index"))
 

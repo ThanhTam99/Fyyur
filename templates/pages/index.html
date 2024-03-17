@@ -5,12 +5,10 @@
 {% block content %}
 <div class="container">
     <h1>Shows Booking Site</h1>
-    <a href="{{ url_for('add_entry', entry_type='artist') }}" class="btn btn-primary">Add Artist</a>
-    <a href="{{ url_for('add_entry', entry_type='venue') }}" class="btn btn-primary">Add Venue</a>
     <div class="row mt-4">
         <div class="col">
-            <h2>Add New Show</h2>
-            <form action="{{ url_for('add_show') }}" method="POST">
+            <h2 id="form-title">Add New</h2>
+            <form id="show-form" action="{{ url_for('add_show') }}" method="POST">
                 <div class="form-group">
                     <label for="artist_id">Artist</label>
                     <select name="artist_id" id="artist_id" class="form-control">
@@ -28,26 +26,26 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="start_time">Start Time</label>
-                    <input type="datetime-local" name="start_time" id="start_time" class="form-control">
+                    <label for="start_time">Start Date</label>
+                    <input type="date" name="start_time" id="start_time" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="end_time">End Time</label>
-                    <input type="datetime-local" name="end_time" id="end_time" class="form-control">
+                    <label for="end_time">End Date</label>
+                    <input type="date" name="end_time" id="end_time" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="ticket_price">Ticket Price</label>
                     <input type="text" name="ticket_price" id="ticket_price" class="form-control">
                 </div>
-                <button type="submit" class="btn btn-primary">Add Show</button>
+                <button id="submit-button" type="submit" class="btn btn-primary">Add Show</button>
             </form>
         </div>
         <div class="col">
             <h2>Current Shows</h2>
-            <table class="table">
+            <table class="table" id="shows-table">
                 <thead class="thead-dark">
                     <tr>
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Artist</th>
                         <th>Venue</th>
                         <th>Start Time</th>
@@ -58,25 +56,28 @@
                 </thead>
                 <tbody>
                     {% for show in shows %}
-                    <tr>
-                        <td>{{ show.id }}</td>
+                    <tr data-show-id="{{ show.id }}" data-artist-id="{{ show.artist_id }}"
+                        data-venue-id="{{ show.venue_id }}" data-start-time="{{ show.start_time.strftime('%Y-%m-%d') }}"
+                        data-end-time="{{ show.end_time.strftime('%Y-%m-%d') }}"
+                        data-ticket-price="{{ show.ticket_price }}">
+                        <td>{{ show.number }}</td>
                         <td>{{ show.artist_name }}</td>
                         <td>{{ show.venue_name }}</td>
-                        <td>{{ show.start_time }}</td>
-                        <td>{{ show.end_time }}</td>
+                        <td>{{ show.start_time.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ show.end_time.strftime('%Y-%m-%d') }}</td>
                         <td>{{ show.ticket_price }}</td>
                         <td>
-                            <form action="{{ url_for('delete_entry', entry_type='show', id=show.id) }}" method="POST">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                            <form action="{{ url_for('delete_entry', entry_type='show', id=show.id) }}" method="POST"
+                                onsubmit="return confirm('Are you sure?');">
+                                <button type="submit" class="btn btn-danger"><i class="fas fa-minus"></i></button>
                             </form>
                         </td>
                     </tr>
                     {% endfor %}
                     <tr>
                         <td colspan="7">
-                            <form action="{{ url_for('add_show') }}" method="POST">
-                                <button type="submit" class="btn btn-success">Add Show</button>
-                            </form>
+                            <button id="clear-show" type="submit" class="btn btn-primary"><i
+                                    class="fas fa-plus"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -101,18 +102,5 @@
         </div>
     </div>
 </div>
-
-<!-- Script để xử lý sự kiện khi nhấn nút "Add" -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("add-show-button").addEventListener("click", function () {
-            document.getElementById("artist_id").value = "";
-            document.getElementById("venue_id").value = "";
-            document.getElementById("start_time").value = "";
-            document.getElementById("end_time").value = "";
-            document.getElementById("ticket_price").value = "";
-        });
-    });
-</script>
 
 {% endblock %}

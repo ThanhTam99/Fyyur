@@ -18,3 +18,7 @@
 .navbar-light .navbar-nav .nav-link:hover {
     background-color: #f0f0f0; /* Màu nền khi hover */
 }
+
+.highlight {
+    background-color: blue; /* Màu nền cho hàng được chọn */
+}
