@@ -5,9 +5,9 @@
 {% block content %}
 <div class="container">
     <h1>Shows Booking Site</h1>
-    <a href="{{ url_for('add_entry', entry_type='artist') }}" class="btn btn-primary">Add New Artist</a>
-    <a href="{{ url_for('add_entry', entry_type='venue') }}" class="btn btn-primary">Add New Venue</a>
-    <div class="row">
+    <a href="{{ url_for('add_entry', entry_type='artist') }}" class="btn btn-primary">Add Artist</a>
+    <a href="{{ url_for('add_entry', entry_type='venue') }}" class="btn btn-primary">Add Venue</a>
+    <div class="row mt-4">
         <div class="col">
             <h2>Add New Show</h2>
             <form action="{{ url_for('add_show') }}" method="POST">
@@ -45,7 +45,7 @@
         <div class="col">
             <h2>Current Shows</h2>
             <table class="table">
-                <thead>
+                <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
                         <th>Artist</th>
@@ -53,10 +53,10 @@
                         <th>Start Time</th>
                         <th>End Time</th>
                         <th>Ticket Price</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% if shows %}
                     {% for show in shows %}
                     <tr>
                         <td>{{ show.id }}</td>
@@ -72,13 +72,24 @@
                         </td>
                     </tr>
                     {% endfor %}
-                    {% else %}
-                    <tr>
-                        <td colspan="6">No shows found.</td>
-                    </tr>
-                    {% endif %}
                 </tbody>
             </table>
+            <!-- Pagination -->
+            {% if total_pages > 1 %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if page > 1 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page - 1 }}">Previous</a></li>
+                    {% endif %}
+                    {% for p in range(1, total_pages + 1) %}
+                    <li class="page-item{% if p == page %} active{% endif %}"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                    {% endfor %}
+                    {% if page < total_pages %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page + 1 }}">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
         </div>
     </div>
 </div>

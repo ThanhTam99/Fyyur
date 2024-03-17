@@ -4,7 +4,7 @@ from models.shows import Shows
 from models import db
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
-
+from math import ceil
 
 def init_app(app):
     @app.route("/")
@@ -13,14 +13,25 @@ def init_app(app):
         venues = Venues.query.all()
         shows = Shows.query.all()
 
-        for show in shows:
-            artist = Artists.query.get(show.artist_id)
-            venue = Venues.query.get(show.venue_id)
-            show.artist_name = artist.name if artist else "Unknown Artist"
-            show.venue_name = venue.name if venue else "Unknown Venue"
+        for show_entry in shows:
+            artist = Artists.query.get(show_entry.artist_id)
+            venue = Venues.query.get(show_entry.venue_id)
+            show_entry.artist_name = artist.name if artist else "Unknown Artist"
+            show_entry.venue_name = venue.name if venue else "Unknown Venue"
+
+        total_shows = len(shows)
+        items_per_page = 5
+        total_pages = ceil(total_shows / items_per_page)
+        page = request.args.get("page", 1, type=int)
+        shows_on_page = shows[(page - 1) * items_per_page : page * items_per_page]
 
         return render_template(
-            "pages/index.html", artists=artists, venues=venues, shows=shows
+            "pages/index.html",
+            artists=artists,
+            venues=venues,
+            shows=shows_on_page,
+            total_pages=total_pages,
+            page=page,
         )
 
     @app.route("/add_entry", methods=["GET", "POST"])
